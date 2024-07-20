@@ -43,7 +43,7 @@ def crawl(url, base_url, depth=0, max_depth=5):
             next_url = urljoin(base_url, link['href'])
             if is_valid_url(next_url, base_url):
                 crawl(next_url, base_url, depth + 1, max_depth)
-                time.sleep(1)  # Respectful crawling
+#                time.sleep(1)  # Respectful crawling
 
 def html_to_markdown(html_content):
     markdown_content = md(html_content)
