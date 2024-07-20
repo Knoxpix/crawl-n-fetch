@@ -57,19 +57,31 @@ def save_markdown(content, filename):
 
 def extract_main_content(soup):
     main_content_selectors = [
-        {'id': 'main-content'},
-        {'class': 'content'},
+        {'id': re.compile('.*content.*', re.IGNORECASE)},
+        {'class': re.compile('.*content.*', re.IGNORECASE)},
         {'class': 'post-content'},
         {'class': 'entry-content'},
         {'class': 'article-content'},
+        {'class': 'article-body'},
+        {'class': 'post-body'},
+        {'class': 'entry-body'},
+        {'class': 'main-content'},
+        {'class': 'story-body'},
+        {'class': 'post'},
+        {'class': 'entry'},
+        {'class': 'content-area'},
+        {'role': 'main'}
     ]
 
     for selector in main_content_selectors:
         main_content = soup.find(attrs=selector)
         if main_content:
             return main_content
-    
-    return None
+
+    # If no specific main content found, try to find the largest content block
+    all_divs = soup.find_all('div')
+    max_div = max(all_divs, key=lambda div: len(div.text), default=None)
+    return max_div
 
 def process_url_list(file_path):
     if not os.path.exists(file_path):
