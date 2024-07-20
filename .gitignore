@@ -1,4 +1,9 @@
 list_url.txt
-venv
+list_url.txt
+*.txt
+venv/
 siam.ai
 www.sanook.com
+.env
+siam.ai/
+www.sanook.com/
