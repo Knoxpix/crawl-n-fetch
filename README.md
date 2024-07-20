@@ -17,7 +17,14 @@ source venv/bin/activate
 ติดตั้ง requests, beautifulsoup4 tqdm และ markdownify โดยใช้ pip:
 
 ````bash
-pip3 install requests beautifulsoup4 tqdm markdownify
+pip3 install requests beautifulsoup4 tqdm python-dotenv markdownify
+````
+
+สร้างไฟล์ .env:
+สร้างไฟล์ .env ในไดเรกทอรีเดียวกับสคริปต์ Python ของคุณและเพิ่ม API key จาก https://jina.ai/reader/ ลงในไฟล์นี้
+
+````makefile
+JINA_AUTH_TOKEN={Jina Reader API KEY}
 ````
 
 การใช้งาน:
