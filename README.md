@@ -6,15 +6,16 @@
 
 สร้าง Virtual environment
 
-bash
+````bash
 pip install virtualenv
 python3 -m venv venv
 source venv/bin/activate
+````
 
 ติดตั้งเครื่องมือที่จำเป็น:
 
 ติดตั้ง requests, beautifulsoup4 tqdm และ markdownify โดยใช้ pip:
 
-bash
+````bash
 pip install requests beautifulsoup4 tqdm markdownify
-
+````
