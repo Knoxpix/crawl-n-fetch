@@ -17,5 +17,15 @@ source venv/bin/activate
 ติดตั้ง requests, beautifulsoup4 tqdm และ markdownify โดยใช้ pip:
 
 ````bash
-pip install requests beautifulsoup4 tqdm markdownify
+pip3 install requests beautifulsoup4 tqdm markdownify
 ````
+
+การใช้งาน:
+รันโค้ดเพื่อเริ่มการ crawl เว็บไซต์, บันทึก URL ลงใน list_url.txt, และแปลงเนื้อหาเป็น Markdown:
+
+````bash
+python3 script.py
+````
+
+ป้อน URL เพื่อเริ่มการ crawl:
+ตัวอย่าง: https://example.com
