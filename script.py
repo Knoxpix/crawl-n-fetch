@@ -4,7 +4,7 @@ from urllib.parse import urljoin, urlparse
 import re
 from tqdm import tqdm
 from dotenv import load_dotenv
-from bs4 import BeautifulSoup  # นำเข้า BeautifulSoup
+from bs4 import BeautifulSoup
 
 # โหลดข้อมูลจากไฟล์ .env
 load_dotenv()
