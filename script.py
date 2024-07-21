@@ -4,25 +4,21 @@ from urllib.parse import urljoin, urlparse
 import re
 from tqdm import tqdm
 from dotenv import load_dotenv
+from bs4 import BeautifulSoup  # นำเข้า BeautifulSoup
 
 # โหลดข้อมูลจากไฟล์ .env
 load_dotenv()
 auth_token = os.getenv("JINA_AUTH_TOKEN")
 
-# เซ็ตที่เก็บ URL ที่เคยเข้าเยี่ยมชมแล้ว
 visited_urls = set()
-
-# ชื่อไฟล์ที่เก็บรายการ URL
 url_list_file = 'list_url.txt'
 
-# ฟังก์ชันสำหรับดึงเนื้อหาจาก URL โดยใช้ Jina AI Reader
 def fetch_content_with_jina(url):
     try:
         print(f"Fetching URL with Jina: {url}")
-        # สร้าง URL สำหรับ Jina AI Reader
         jina_url = f"https://r.jina.ai/{url}"
         headers = {
-            "Authorization": f"Bearer {auth_token}"  # เพิ่ม Authorization header
+            "Authorization": f"Bearer {auth_token}"
         }
         response = requests.get(jina_url, headers=headers)
         response.raise_for_status()
@@ -31,18 +27,15 @@ def fetch_content_with_jina(url):
         print(f"Error fetching {url} with Jina: {e}")
         return None
 
-# ฟังก์ชันตรวจสอบว่า URL นั้นเป็น URL ที่อยู่ใน domain เดียวกันหรือไม่
 def is_valid_url(url, base_url):
     parsed_url = urlparse(url)
     return parsed_url.netloc == urlparse(base_url).netloc
 
-# ฟังก์ชันบันทึก URL ลงในไฟล์
 def save_url_to_file(url):
     with open(url_list_file, 'a', encoding='utf-8') as file:
         file.write(url + '\n')
     print(f"URL saved to {url_list_file}: {url}")
 
-# ฟังก์ชันการ crawl URL
 def crawl(url, base_url, depth=0, max_depth=5):
     if url in visited_urls or depth > max_depth:
         print(f"Skipping URL (already visited or max depth reached): {url}")
@@ -59,7 +52,6 @@ def crawl(url, base_url, depth=0, max_depth=5):
             if is_valid_url(next_url, base_url):
                 crawl(next_url, base_url, depth + 1, max_depth)
 
-# ฟังก์ชันบันทึกเนื้อหาเป็นไฟล์ Markdown
 def save_markdown(content, filename):
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'w', encoding='utf-8') as file:
@@ -67,7 +59,6 @@ def save_markdown(content, filename):
     file_size = os.path.getsize(filename)
     print(f"Content saved to {filename} with size {file_size} bytes")
 
-# ฟังก์ชันประมวลผลรายการ URL ที่เก็บไว้ในไฟล์
 def process_url_list(file_path):
     if not os.path.exists(file_path):
         print(f"The file {file_path} does not exist.")
@@ -92,7 +83,6 @@ def process_url_list(file_path):
         else:
             print(f"Failed to fetch content for URL: {url}")
 
-# ฟังก์ชันหลักในการควบคุมการทำงานทั้งหมด
 def main():
     if os.path.exists(url_list_file):
         print(f"{url_list_file} already exists. Skipping crawling.")
@@ -110,4 +100,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
